@@ -7,7 +7,7 @@ class Location(models.Model):
     """
     latitude = models.FloatField()
     longitude = models.FloatField()
-    address = models.CharField(blank=True)
+    address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
     state = USStateField(blank=True)
     zip_code = models.CharField(max_length=5, blank=True)
