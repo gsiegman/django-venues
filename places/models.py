@@ -7,14 +7,14 @@ class Location(models.Model):
     """
     latitude = models.FloatField()
     longitude = models.FloatField()
-    address = models.TextField(blank=True)
+    address = models.CharField(blank=True)
     city = models.CharField(max_length=100, blank=True)
     state = USStateField(blank=True)
     zip_code = models.CharField(max_length=5, blank=True)
    
     def __unicode__(self):
         return u'%s %s, %s %s at %s, %s' % (self.address, self.city, self.state,
-                                                self.zip, self.latitude, self.longitude)                                        
+                                                self.zip_code, self.latitude, self.longitude)                                        
     @property
     def full_address(self):
         return '%s %s, %s %s' % (self.address, self.city, self.state, self.zip_code)
