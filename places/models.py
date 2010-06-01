@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
 
 class Location(models.Model):
-		"""
-		A geographic location.
-		"""
+    """
+    A geographic location.
+    """
     latitude = models.FloatField()
     longitude = models.FloatField()
     address = models.TextField(blank=True)
@@ -20,9 +20,9 @@ class Location(models.Model):
         return '%s %s, %s %s' % (self.address, self.city, self.state, self.zip_code)
     
 class Place(models.Model):
-		"""
-		A place (with a name).
-		"""
+    """
+    A place (with a name).
+    """
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     phone = PhoneNumberField(blank=True)
@@ -34,5 +34,5 @@ class Place(models.Model):
 
     def get_absolute_url(self):
         return reverse("places_place_detail", 
-        		kwargs={"id": self.id}
+                kwargs={"id": self.id}
         )
