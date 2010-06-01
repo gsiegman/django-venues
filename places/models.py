@@ -24,7 +24,7 @@ class Place(models.Model):
     A place (with a name).
     """
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     phone = PhoneNumberField(blank=True)
     website = models.URLField(blank=True)
     location = models.ForeignKey(Location)

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from places.models import Place
 
-def place_detail(request, place_id, **kwargs):
+def place_detail(request, slug, **kwargs):
 	"""
 	The detail view of a place.
 	
@@ -12,7 +12,7 @@ def place_detail(request, place_id, **kwargs):
 	"""
 	template_name = kwargs.get("template_name", "places/place_detail.html")
 	
-	place = get_object_or_404(Place, pk=place_id)
+	place = get_object_or_404(Place, slug=slug)
 	
 	return render_to_response(template_name, {
 		"place": place,
