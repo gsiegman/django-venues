@@ -19,9 +19,9 @@ class Location(models.Model):
     def full_address(self):
         return '%s %s, %s %s' % (self.address, self.city, self.state, self.zip_code)
     
-class Place(models.Model):
+class Venue(models.Model):
     """
-    A place (with a name).
+    A place where something occurs.
     """
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
@@ -33,6 +33,6 @@ class Place(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("places_place_detail", 
+        return reverse("venues_venue_detail", 
                 kwargs={"id": self.id}
         )
