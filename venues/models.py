@@ -14,10 +14,12 @@ class Location(models.Model):
    
     def __unicode__(self):
         return u'%s %s, %s %s at %s, %s' % (self.address, self.city, self.state,
-                                                self.zip_code, self.latitude, self.longitude)                                        
+                                            self.zip_code, self.latitude, 
+                                            self.longitude)                                        
     @property
     def full_address(self):
-        return '%s %s, %s %s' % (self.address, self.city, self.state, self.zip_code)
+        return '%s %s, %s %s' % (self.address, self.city, 
+                                 self.state, self.zip_code)
     
 class Venue(models.Model):
     """
@@ -25,6 +27,7 @@ class Venue(models.Model):
     """
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
+    description = models.TextField()
     phone = PhoneNumberField(blank=True)
     website = models.URLField(blank=True)
     location = models.ForeignKey(Location)
@@ -34,5 +37,5 @@ class Venue(models.Model):
 
     def get_absolute_url(self):
         return reverse("venues_venue_detail", 
-                kwargs={"id": self.id}
+                kwargs={"slug": self.slug}
         )
