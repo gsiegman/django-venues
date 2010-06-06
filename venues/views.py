@@ -3,8 +3,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from venues.models import Venue
 
-def venue_detail(request, slug, venue_type=None, 
-        venue_model="venues.venue", extra_context=None, **kwargs):
+def venue_detail(request, slug):
     """
     The detail view of a venue.
 	
@@ -12,28 +11,16 @@ def venue_detail(request, slug, venue_type=None,
     Context:
 	    venue:
 		    the ``venue`` (:model:`venues.Venue`) to be detailed
-	    venue_type:
-		    a venue type typically provided by models that inherit
-		    from ``venue`` (:model:`venues.Venue`)
     """
-    template_name = kwargs.get("template_name", "venues/venue_detail.html")
+    venue = get_object_or_404(Venue, slug=slug)
+    venue_app = venue.venue_model_type.split('.')[0]
+    venue_model_label = venue.venue_model_type.split('.')[1]
 
-    c = RequestContext(request, {'venue_type': venue_type})
+    venue_of_type = get_object_or_404(ContentType.objects.get(app_label=venue_app,
+                        model=venue_model_label).model_class(), slug=slug)
 
-    if extra_context is None:
-        extra_context = {}
-    else:
-        for k, v in extra_context.items():
-            c[k] = v
-
-    venue_app = venue_model.split('.')[0]
-    venue_model_label = venue_model.split('.')[1]
-
-    venue_model_type = ContentType.objects.get(app_label=venue_app,
-                                    model=venue_model_label)
-
-    venue = get_object_or_404(venue_model_type.model_class(), slug=slug)
+    template_name = "%s/%s_detail.html" % (venue_app, venue_model_label)
 	
     return render_to_response(template_name, {
-        "venue": venue,
-    }, context_instance=c)
+        "venue": venue_of_type,
+    }, context_instance=RequestContext(request))

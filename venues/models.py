@@ -46,6 +46,9 @@ class Venue(models.Model):
     phone = PhoneNumberField(blank=True)
     website = models.URLField(blank=True)
     location = models.OneToOneField(Location)
+    venue_model_type = models.CharField(max_length=100, 
+        editable=False, 
+        default="venues.venue")
 
     def __unicode__(self):
         return self.name
