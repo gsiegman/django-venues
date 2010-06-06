@@ -1,9 +1,10 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from venues.models import Venue
 
 def venue_detail(request, slug, venue_type=None, 
-        extra_context=None, **kwargs):
+        venue_model="venues.venue", extra_context=None, **kwargs):
     """
     The detail view of a venue.
 	
@@ -25,7 +26,9 @@ def venue_detail(request, slug, venue_type=None,
         for k, v in extra_context.items():
             c[k] = v
 
-    venue = get_object_or_404(Venue, slug=slug)
+    venue_model_type = ContentType.objects.get(app_label=venue_model.split[0],
+                                    model=venue_model.split[1])
+    venue = get_object_or_404(venue_model_type.model_class(), slug=slug)
 	
     return render_to_response(template_name, {
         "venue": venue,
