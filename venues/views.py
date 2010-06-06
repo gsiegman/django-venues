@@ -26,8 +26,8 @@ def venue_detail(request, slug, venue_type=None,
         for k, v in extra_context.items():
             c[k] = v
 
-    venue_model_type = ContentType.objects.get(app_label=venue_model.split[0],
-                                    model=venue_model.split[1])
+    venue_model_type = ContentType.objects.get(app_label=venue_model.split(0),
+                                    model=venue_model.split(1))
     venue = get_object_or_404(venue_model_type.model_class(), slug=slug)
 	
     return render_to_response(template_name, {
