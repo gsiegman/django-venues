@@ -52,5 +52,5 @@ class Venue(models.Model):
 
     def get_absolute_url(self):
         return reverse("venues_venue_detail", 
-                kwargs={"slug": self.slug}
+                args=[self.slug]
         )
