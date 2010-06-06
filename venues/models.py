@@ -41,11 +41,11 @@ class Venue(models.Model):
     """
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    image = models.ForeignKey(VenueImage, blank=True, null=True)
+    image = models.OneToOneField(VenueImage, blank=True, null=True)
     description = models.TextField()
     phone = PhoneNumberField(blank=True)
     website = models.URLField(blank=True)
-    location = models.ForeignKey(Location)
+    location = models.OneToOneField(Location)
 
     def __unicode__(self):
         return self.name
